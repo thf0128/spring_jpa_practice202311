@@ -131,7 +131,7 @@ class StudentRepositoryTest {
         list.forEach(System.out::println);
         System.out.println("\n\n\n");
     }
-
+    
     @Test
     @DisplayName("JPQL로 삭제하기")
     void testDeleteByJPQL() {
@@ -139,12 +139,23 @@ class StudentRepositoryTest {
         String name = "대길이";
         //when
         studentRepository.deleteByNameWithJPQL(name);
-
+    
         //then
         List<Student> students = studentRepository.findByName(name);
 
         assertEquals(0, students.size());
     }
-
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+

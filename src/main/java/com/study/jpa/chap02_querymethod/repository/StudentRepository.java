@@ -45,3 +45,14 @@ public interface StudentRepository
     void deleteByNameWithJPQL(String name);
 
 }
+
+
+
+
+
+
+
+
+
+
+

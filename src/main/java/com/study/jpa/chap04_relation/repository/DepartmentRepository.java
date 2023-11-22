@@ -9,6 +9,17 @@ import java.util.List;
 public interface DepartmentRepository
         extends JpaRepository<Department, Long> {
 
+
     @Query("SELECT DISTINCT d FROM Department d JOIN FETCH d.employees")
     List<Department> findAllIncludesEmployees();
 }
+
+
+
+
+
+
+
+
+
+

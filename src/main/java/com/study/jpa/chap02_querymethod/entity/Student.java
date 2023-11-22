@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+
 @Setter // 실무적 측면에서 setter는 신중하게 선택할 것.
 @Getter
 @ToString @EqualsAndHashCode(of = "id") // id 같으면 같은 객체로 인식.
@@ -26,3 +27,15 @@ public class Student {
     private String major;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

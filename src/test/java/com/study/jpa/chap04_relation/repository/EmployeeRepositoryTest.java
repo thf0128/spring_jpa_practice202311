@@ -25,7 +25,7 @@ class EmployeeRepositoryTest {
     @Autowired
     DepartmentRepository departmentRepository;
 
-    @BeforeEach
+//    @BeforeEach
     void bulkInsert() {
         Department d1 = Department.builder()
                 .name("영업부")
@@ -78,6 +78,7 @@ class EmployeeRepositoryTest {
 
         assertEquals("어피치", employee.getName());
     }
+
     @Test
     @DisplayName("부서 정보 조회")
     void testFindDept() {
@@ -87,7 +88,6 @@ class EmployeeRepositoryTest {
         Department department
                 = departmentRepository.findById(id)
                 .orElseThrow();
-
         //then
         System.out.println("\n\n\n");
         System.out.println("department = " + department);
@@ -95,3 +95,18 @@ class EmployeeRepositoryTest {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

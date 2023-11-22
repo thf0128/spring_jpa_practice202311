@@ -10,8 +10,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,11 +26,11 @@ class DepartmentRepositoryTest {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    // 엔터티들을 관리하는 역할을 수행하는 클래스. (영속성 컨텍스트를 관리함, Spring Data JPA에서만 사용하는게 x)
-    // 영속성 컨텍스트의 내의 내용들을 DB에 반영시키거나 비워내거나 수명을 관리할 수 있는 객체.
+    // 엔터티들을 관리하는 역할을 수행하는 클래스. (영속성 컨텍스트를 관리함, Spring Data JPA에서만 사용하는 게 x)
+    // 영속성 컨텍스의 내의 내용들을 DB에 반영시키거나 비워내거나 수명을 관리할 수 있는 객체.
     @Autowired
     EntityManager entityManager;
-    
+
     @Test
     @DisplayName("특정 부서를 조회하면 해당 부서원들도 함께 조회되어야 한다.")
     void testFindDept() {
@@ -42,10 +42,10 @@ class DepartmentRepositoryTest {
         //then
         System.out.println("\n\n\n");
         System.out.println("department = " + department);
-        System.out.println("department.getEmpolyees() = " + department.getEmployees());
+        System.out.println("department.getEmployees() = " + department.getEmployees());
         System.out.println("\n\n\n");
     }
-    
+
     @Test
     @DisplayName("Lazy로딩과 Eager로딩의 차이")
     void testLazyEager() {
@@ -55,6 +55,7 @@ class DepartmentRepositoryTest {
         //when
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow();
+
         //then
         System.out.println("\n\n\n");
         System.out.println("employee = " + employee);
@@ -70,7 +71,7 @@ class DepartmentRepositoryTest {
         Employee foundEmp = employeeRepository.findById(1L)
                 .orElseThrow();
 
-       Department newDept = departmentRepository.findById(2L)
+        Department newDept = departmentRepository.findById(2L)
                 .orElseThrow();
 
         // 2번 -> 사원의 부서 정보를 업데이트 하면서, 부서에 대한 정보도 같이 업데이트.
@@ -94,35 +95,54 @@ class DepartmentRepositoryTest {
         System.out.println("\n\n\n");
 
         //then
-
     }
+
     @Test
     @DisplayName("N+1 문제 발생 예시")
     void testNPlus1Ex() {
-
         List<Department> departments = departmentRepository.findAll();
 
         departments.forEach(dept -> {
-            System.out.println("\n\n====== 사원 리스트 =======");
+            System.out.println("\n\n========== 사원 리스트 ==========");
             List<Employee> employees = dept.getEmployees();
             System.out.println(employees);
 
             System.out.println("\n\n");
         });
+
     }
 
     @Test
     @DisplayName("N+1 문제 해결 예시")
     void testNPlus1Solution() {
-
         List<Department> departments = departmentRepository.findAllIncludesEmployees();
 
         departments.forEach(dept -> {
-            System.out.println("\n\n====== 사원 리스트 =======");
+            System.out.println("\n\n========== 사원 리스트 ==========");
             List<Employee> employees = dept.getEmployees();
             System.out.println(employees);
 
             System.out.println("\n\n");
         });
+
     }
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

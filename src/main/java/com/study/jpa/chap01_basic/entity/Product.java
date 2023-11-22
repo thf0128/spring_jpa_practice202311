@@ -1,6 +1,5 @@
 package com.study.jpa.chap01_basic.entity;
 
-import jdk.jfr.Category;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,15 +29,17 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @CreationTimestamp // Default sysdate
-    @Column(updatable = false) // 수정이 강제로 안되게 막아줌
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDate;
 
-    @UpdateTimestamp // update될 때 자동으로 세팅해라
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     public enum Category {
         FOOD, FASHION, ELECTRONIC
     }
+
+
 
 }
