@@ -38,7 +38,7 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updateDate; // 수정시간
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", orphanRemoval = true) // 고아객체가 된 애는 삭제가 되어도 좋음 - 양방향이라서 추가 단방향이면 orpanRemoval 추가 안해도 됨
     @Builder.Default // 특정 필드를 직접 지정한 값으로 초기화 하는 것을 강제.
     private List<HashTag> hashTags = new ArrayList<>();
 

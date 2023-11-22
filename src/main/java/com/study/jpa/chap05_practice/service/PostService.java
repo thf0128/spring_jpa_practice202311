@@ -57,22 +57,26 @@ public class PostService {
 
     public PostDetailResponseDTO getDetail(Long id) throws Exception {
 
-        Post postEntity = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(id + "번 게시물이 존재하지 않습니다!"));
+        Post postEntity = getPost(id);
 
         return new PostDetailResponseDTO(postEntity);
 
     }
 
-    public PostDetailResponseDTO insert(PostCreateDTO dto)
-        throws Exception {
-        //호출부인 controller가 받게됨
+    private Post getPost(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(id + "번 게시물이 존재하지 않습니다!")
+                );
+    }
 
-        // controller에서 받은 dto를 엔터티로 전달 PostCreateDTO에다가 전달 dto작성
-        //게시물 저장 (아직 해시태그는 insert 되지 않음)
+    public PostDetailResponseDTO insert(PostCreateDTO dto)
+            throws Exception {
+
+        // 게시물 저장 (아직 해시태그는 insert 되지 않음)
         Post saved = postRepository.save(dto.toEntity());
-        //이 쪽으로 엔터티가 리턴됨
-        //해시태그 저장
+
+        // 해시태그 저장
         List<String> hashTags = dto.getHashTags();
         if(hashTags != null && !hashTags.isEmpty()) {
             hashTags.forEach(ht -> {
@@ -100,6 +104,27 @@ public class PostService {
 
 
         return new PostDetailResponseDTO(saved);
+    }
+
+    public PostDetailResponseDTO modify(PostModifyDTO dto) {
+
+        // 수정 전 데이터를 조회
+        Post postEntity = getPost(dto.getPostNo());
+
+        // 수정 시작
+        postEntity.setTitle(dto.getTitle());
+        postEntity.setContent(dto.getContent());
+
+        // 수정 완료
+        Post modifiedPost = postRepository.save(postEntity);
+
+        return new PostDetailResponseDTO(modifiedPost);
+    }
+
+    public void delete(Long id) throws Exception {
+
+        postRepository.deleteById(id);
+
     }
 }
 
