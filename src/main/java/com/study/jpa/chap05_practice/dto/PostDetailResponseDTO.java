@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Builder
 public class PostDetailResponseDTO {
 
-    private  String writer;
+    private String writer;
     private String title;
     private String content;
     private List<String> hashTags;
@@ -34,7 +34,17 @@ public class PostDetailResponseDTO {
                             .stream()
                             .map(HashTag::getTagName)
                             .collect(Collectors.toList());
-
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+

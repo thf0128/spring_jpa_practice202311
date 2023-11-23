@@ -29,6 +29,7 @@ public class Department {
     // 단순히 읽기 전용(조회)으로만 사용해야 한다.
     // mappedBy에는 상대방 엔터티의 조인되는 필드명을 작성.
     @OneToMany(mappedBy = "department")
+    @Builder.Default
     private List<Employee> employees = new ArrayList<>(); // 초기화가 필요합니다. (NPE 방지)
 
 }

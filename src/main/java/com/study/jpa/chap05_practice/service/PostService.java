@@ -44,8 +44,8 @@ public class PostService {
         // 게시물 정보를 DTO의 형태에 맞게 변환 (stream을 이용하여 객체마다 일괄 처리)
         List<PostDetailResponseDTO> detailList
                 =  postList.stream()
-                .map(PostDetailResponseDTO::new)
-                .collect(Collectors.toList());
+                            .map(PostDetailResponseDTO::new)
+                            .collect(Collectors.toList());
 
         // DB에서 조회한 정보를 JSON 형태에 맞는 DTO로 변환 -> PostListResponseDTO
         return PostListResponseDTO.builder()
@@ -71,7 +71,7 @@ public class PostService {
     }
 
     public PostDetailResponseDTO insert(PostCreateDTO dto)
-            throws Exception {
+        throws Exception {
 
         // 게시물 저장 (아직 해시태그는 insert 되지 않음)
         Post saved = postRepository.save(dto.toEntity());

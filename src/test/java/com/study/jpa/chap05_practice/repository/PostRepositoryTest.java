@@ -26,9 +26,21 @@ class PostRepositoryTest {
                     Post.builder()
                             .title("하하호호제목" + i)
                             .content("낄낄깔깔내용" + i)
-                            .writer("꾸꾸까까" + i)
+                            .writer("꾸까꾸까" + i)
                             .build()
             );
         }
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+

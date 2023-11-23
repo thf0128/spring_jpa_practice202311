@@ -22,10 +22,16 @@ public class HashTag {
     private String tagName; // 해시태그 이름
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //cascade 폭포수 처럼 낙하 부모에서 낙하해서 자식에게 영향을 주겠다.
     @JoinColumn(name = "post_no")
     private Post post;
 
 }
+
+
+
+
+
+
+
 
 

@@ -5,6 +5,10 @@ import com.study.jpa.chap05_practice.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +37,6 @@ public class PostApiController {
         게시물 수정:     /posts            - PUT, PATCH, payload: (title, content, postNo)
         게시물 삭제:     /posts/{id}       - DELETE
      */
-
     private final PostService postService;
 
     @GetMapping
@@ -65,19 +68,18 @@ public class PostApiController {
             @Parameter(name = "content", description = "게시물의 내용을 쓰세요!", example = "내용내용"),
             @Parameter(name = "hashTags", description = "게시물의 해시태그를 작성하세요!", example = "['하하', '호호']")
     })
-
     @PostMapping
     public ResponseEntity<?> create(
             @Validated @RequestBody PostCreateDTO dto,
             BindingResult result // 검증 에러 정보를 가진 객체
     ) {
-        log.info("/api/v1/posts POST!! - payload:{} ", dto);
+       log.info("/api/v1/posts POST!! - payload:{} ", dto);
 
-        if(dto == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("등록 게시물 정보를 전달해 주세요!");
-        }
+       if(dto == null) {
+           return ResponseEntity
+                   .badRequest()
+                   .body("등록 게시물 정보를 전달해 주세요!");
+       }
 
         ResponseEntity<List<FieldError>> fieldErrors = getValidatedResult(result);
         if (fieldErrors != null) return fieldErrors;
@@ -96,8 +98,13 @@ public class PostApiController {
         }
     }
 
+    @Operation(summary = "게시물 수정", description = "게시물 수정을 담당하는 메서드 입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "수정 완료!", content = @Content(schema = @Schema(implementation = PostDetailResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "입력값 검증 실패"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
 
-
+    })
     // 게시물 수정
     @RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT})
     public ResponseEntity<?> update(
@@ -109,7 +116,7 @@ public class PostApiController {
                 , request.getMethod(), dto);
 
         ResponseEntity<List<FieldError>> fieldErrors = getValidatedResult(result);
-        if(fieldErrors != null) return fieldErrors; // null 아니면 검증에 전달된 dto값 문제가 있으니 에러값 도출
+        if(fieldErrors != null) return fieldErrors;
 
         PostDetailResponseDTO responseDTO
                 = postService.modify(dto);
@@ -151,7 +158,13 @@ public class PostApiController {
             return ResponseEntity.internalServerError()
                     .body(e.getMessage());
         }
+
     }
+    
+    
+    
+
+
 }
 
 

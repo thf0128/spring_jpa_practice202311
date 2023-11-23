@@ -22,3 +22,11 @@ logging.level:
 springdoc:
   swagger-ui:
     path: /myapi.html
+
+
+
+
+
+
+
+
